@@ -5,14 +5,19 @@ import io.spring.batch.helloworldbatch.listener.JobLoggerListener;
 import io.spring.batch.helloworldbatch.validator.CompositeParameterValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.CompositeJobParametersValidator;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
 import org.springframework.batch.core.listener.JobListenerFactoryBean;
+import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,6 +43,7 @@ public class HelloWorldBatchApplication {
     public Step step1() {
         return this.stepBuilderFactory.get("step1")
                 .tasklet(helloWorldTasklet(null, null))
+                .listener(promotionListener())
 //                .tasklet(helloWorldTasklet())
                 .build();
 
@@ -70,6 +76,15 @@ public class HelloWorldBatchApplication {
 //        });
 //    }
 
+    @Bean
+    public StepExecutionListener promotionListener() {
+        ExecutionContextPromotionListener listener = new ExecutionContextPromotionListener();
+
+        listener.setKeys(new String[] {"name"});
+
+        return listener;
+    }
+
     // 늦은 바인딩 사용. 실제 job 이 해당 tasklet 을 호출할 때까지 지연 후 실행된다.
     @StepScope
     @Bean
@@ -81,6 +96,14 @@ public class HelloWorldBatchApplication {
         System.out.println("test!!!");
 
         return ((stepContribution, chunkContext) -> {
+
+            // 잡의 executionContext 확인한다.
+            ExecutionContext jobContext = chunkContext.getStepContext()
+                    .getStepExecution()
+                    .getExecutionContext();
+
+            jobContext.put("name", name);
+
             System.out.printf("Hello, %s!%n", name);
             System.out.printf("fileName = %s!%n", fileName);
             return RepeatStatus.FINISHED;
@@ -100,5 +123,10 @@ public class HelloWorldBatchApplication {
                 .build();
     }
 
-
+//    public RepeatStatus execute(
+//            StepContribution step,
+//            ChunkContext context) throws Exception {
+//
+//        String name = (String) context.getStepContext()
+//    }
 }
