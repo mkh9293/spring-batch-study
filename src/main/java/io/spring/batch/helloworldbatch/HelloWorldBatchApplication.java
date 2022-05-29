@@ -1,13 +1,13 @@
 package io.spring.batch.helloworldbatch;
 
+import io.spring.batch.helloworldbatch.validator.CompositeParameterValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.job.CompositeJobParametersValidator;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class HelloWorldBatchApplication {
     @Bean
     public Step step1() {
         return this.stepBuilderFactory.get("step1")
-                .tasklet(helloWorldTasklet(null))
+                .tasklet(helloWorldTasklet(null, null))
 //                .tasklet(helloWorldTasklet())
                 .build();
 
@@ -70,12 +70,15 @@ public class HelloWorldBatchApplication {
     @StepScope
     @Bean
     public Tasklet helloWorldTasklet(
+            @Value("#{jobParameters['fileName']}") String fileName,
             @Value("#{jobParameters['name']}") String name
     ) {
 
         System.out.println("test!!!");
+
         return ((stepContribution, chunkContext) -> {
             System.out.printf("Hello, %s!%n", name);
+            System.out.printf("fileName = %s!%n", fileName);
             return RepeatStatus.FINISHED;
         });
     }
@@ -84,7 +87,9 @@ public class HelloWorldBatchApplication {
     public Job job(){
         return this.jobBuilderFactory.get("basicJob")
                 .start(step1())
+                .validator(new CompositeParameterValidator().compositeValidator())
                 .build();
     }
+
 
 }
