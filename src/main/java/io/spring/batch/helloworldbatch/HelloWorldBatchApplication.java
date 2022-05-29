@@ -11,6 +11,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.CompositeJobParametersValidator;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.listener.JobListenerFactoryBean;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,10 @@ public class HelloWorldBatchApplication {
                 .start(step1())
                 .validator(new CompositeParameterValidator().compositeValidator())
                 .incrementer(new DailyJobTimestamper())
-                .listener(new JobLoggerListener())
+//                .listener(new JobLoggerListener()) // JobLoggerExecution 인터페이스를 구현해서 사용하는 경우
+                .listener(
+                        JobListenerFactoryBean.getListener(new JobLoggerListener()) // @AfterJob, @BeforeJob 어노테이션으로 사용하는 경우
+                )
                 .build();
     }
 
