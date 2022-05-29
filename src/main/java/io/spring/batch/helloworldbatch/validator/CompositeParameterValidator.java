@@ -15,7 +15,7 @@ public class CompositeParameterValidator {
 
         DefaultJobParametersValidator defaultJobParametersValidator = new DefaultJobParametersValidator(
                 new String[] {"fileName"},
-                new String[] {"name"}
+                new String[] {"name", "currentDate"}
         );
 
         defaultJobParametersValidator.afterPropertiesSet();

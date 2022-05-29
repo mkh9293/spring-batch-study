@@ -1,5 +1,6 @@
 package io.spring.batch.helloworldbatch;
 
+import io.spring.batch.helloworldbatch.incrementer.DailyJobTimestamper;
 import io.spring.batch.helloworldbatch.validator.CompositeParameterValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -8,6 +9,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.CompositeJobParametersValidator;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +90,7 @@ public class HelloWorldBatchApplication {
         return this.jobBuilderFactory.get("basicJob")
                 .start(step1())
                 .validator(new CompositeParameterValidator().compositeValidator())
+                .incrementer(new DailyJobTimestamper())
                 .build();
     }
 
