@@ -1,6 +1,7 @@
 package io.spring.batch.helloworldbatch;
 
 import io.spring.batch.helloworldbatch.incrementer.DailyJobTimestamper;
+import io.spring.batch.helloworldbatch.listener.JobLoggerListener;
 import io.spring.batch.helloworldbatch.validator.CompositeParameterValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -91,6 +92,7 @@ public class HelloWorldBatchApplication {
                 .start(step1())
                 .validator(new CompositeParameterValidator().compositeValidator())
                 .incrementer(new DailyJobTimestamper())
+                .listener(new JobLoggerListener())
                 .build();
     }
 
