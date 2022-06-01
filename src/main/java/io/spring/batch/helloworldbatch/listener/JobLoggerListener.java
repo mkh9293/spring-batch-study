@@ -1,7 +1,6 @@
 package io.spring.batch.helloworldbatch.listener;
 
 import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.annotation.AfterJob;
 import org.springframework.batch.core.annotation.BeforeJob;
 
@@ -24,7 +23,7 @@ public class JobLoggerListener {
     }
 }
 
-// JobExecutionListener 인터페이스를 구현하여 리스너를 생성한다.
+// JobExecutionListener 인터페이스를 구현하여 잡 리스너를 생성한다. (job 의 시작과 끝 지점에서 실행할 작업을 명시한다.)
 // job 시작 전, 후 에 실행할 작업들을 명시할 수 있다.
 //public class JobLoggerListener implements JobExecutionListener {
 //
