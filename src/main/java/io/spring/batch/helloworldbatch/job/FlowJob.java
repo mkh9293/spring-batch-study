@@ -26,9 +26,26 @@ public class FlowJob {
     @Bean
     public Job conditionalStepLogicJob() {
         return this.jobBuilderFactory.get("conditionalStepLogicJob")
-                .start(preprocessingFlow())
+
+                // 잡 빌더내에서 flow 를 직접 호출하면, jobRepository 내에서는 단순히 잡에서 스텝을 호출하는것과 동일하게 보인다.
+                // 반면, 스텝으로 한번 래핑하는 경우 추가적인 정보가 더 담기게 되어 모니터링하기에 좋다.
+
+                // 잡 빌더내에서 flow 를 직접 호출하지 않고, 스텝으로 래핑한다.
+                .start(initializeBatch())
                 .next(runBatch())
-                .end()
+                .build();
+
+        // 잡 빌더내에서 flow 를 직접 호출한다.
+//                .start(preprocessingFlow())
+//                .next(runBatch())
+//                .end()
+//                .build();
+    }
+
+    @Bean
+    public Step initializeBatch() {
+        return this.stepBuilderFactory.get("initializeBatch")
+                .flow(preprocessingFlow())
                 .build();
     }
 
