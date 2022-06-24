@@ -4,6 +4,7 @@ import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -51,13 +52,19 @@ public class RestApplication {
         private JobLauncher jobLauncher;
 
         @Autowired
+        private JobExplorer jobExplorer;
+
+        @Autowired
         private ApplicationContext applicationContext;
 
         @PostMapping(path = "/run")
         public ExitStatus runJob(@RequestBody JobLaunchRequest request) throws Exception {
             Job job = this.applicationContext.getBean(request.getName(), Job.class);
+            JobParameters jobParameters = new JobParametersBuilder(request.getJobParameters(), this.jobExplorer)
+                    .getNextJobParameters(job)
+                    .toJobParameters();
 
-            return this.jobLauncher.run(job, request.getJobParameters()).getExitStatus();
+            return this.jobLauncher.run(job, jobParameters).getExitStatus();
         }
 
     }
