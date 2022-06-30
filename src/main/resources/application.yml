@@ -8,6 +8,7 @@ spring:
   batch:
     job:
       initialize-schema: always
-      enabled: false
+#      enabled: false
+      enabled: true
 #      names: job4
 
