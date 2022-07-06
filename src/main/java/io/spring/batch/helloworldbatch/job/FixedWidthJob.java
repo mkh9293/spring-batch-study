@@ -1,6 +1,7 @@
 package io.spring.batch.helloworldbatch.job;
 
 import io.spring.batch.helloworldbatch.domain.Customer;
+import io.spring.batch.helloworldbatch.mapper.CustomerFieldSetMapper;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -50,18 +51,34 @@ public class FixedWidthJob {
     ) {
 
         return new FlatFileItemReaderBuilder<Customer>()
-                .name("customerItemReader")
-                .resource(inputFile)
-                .fixedLength()
-                .columns(new Range[]{
-                        new Range(1,11), new Range(12, 12), new Range(13, 22),
-						new Range(23, 26), new Range(27,46), new Range(47,62), new Range(63,64),
-						new Range(65,69)
-                })
+                .name("customerItemReader123")
+                .delimited()
                 .names("firstName", "middleInitial", "lastName", "addressNumber", "street", "city", "state","zipCode")
-                .targetType(Customer.class)
+                .fieldSetMapper(new CustomerFieldSetMapper())
+                .resource(inputFile)
                 .build();
     }
+
+//    @Bean
+//    @StepScope
+//    public FlatFileItemReader<Customer> customerItemReader(
+//            @Value("#{jobParameters['customerFile']}") Resource inputFile
+//    ) {
+//
+//        return new FlatFileItemReaderBuilder<Customer>()
+//                .name("customerItemReader123")
+//                .resource(inputFile)
+//                .saveState(false)
+//                .fixedLength()
+//                .columns(new Range[]{
+//                        new Range(1,11), new Range(12, 12), new Range(13, 22),
+//						new Range(23, 26), new Range(27,46), new Range(47,62), new Range(63,64),
+//						new Range(65,69)
+//                })
+//                .names("firstName", "middleInitial", "lastName", "addressNumber", "street", "city", "state","zipCode")
+//                .targetType(Customer.class)
+//                .build();
+//    }
 
     @Bean
     public ItemWriter<Customer> itemWriter() {
