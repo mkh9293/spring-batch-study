@@ -2,6 +2,7 @@ package io.spring.batch.helloworldbatch.job;
 
 import io.spring.batch.helloworldbatch.domain.Customer;
 import io.spring.batch.helloworldbatch.mapper.CustomerFieldSetMapper;
+import io.spring.batch.helloworldbatch.tokenizer.CustomerLineTokenizer;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -52,12 +53,26 @@ public class FixedWidthJob {
 
         return new FlatFileItemReaderBuilder<Customer>()
                 .name("customerItemReader123")
-                .delimited()
-                .names("firstName", "middleInitial", "lastName", "addressNumber", "street", "city", "state","zipCode")
-                .fieldSetMapper(new CustomerFieldSetMapper())
+                .lineTokenizer(new CustomerLineTokenizer())
+                .targetType(Customer.class)
                 .resource(inputFile)
                 .build();
     }
+
+//    @Bean
+//    @StepScope
+//    public FlatFileItemReader<Customer> customerItemReader(
+//            @Value("#{jobParameters['customerFile']}") Resource inputFile
+//    ) {
+//
+//        return new FlatFileItemReaderBuilder<Customer>()
+//                .name("customerItemReader123")
+//                .delimited()
+//                .names("firstName", "middleInitial", "lastName", "addressNumber", "street", "city", "state","zipCode")
+//                .fieldSetMapper(new CustomerFieldSetMapper())
+//                .resource(inputFile)
+//                .build();
+//    }
 
 //    @Bean
 //    @StepScope
