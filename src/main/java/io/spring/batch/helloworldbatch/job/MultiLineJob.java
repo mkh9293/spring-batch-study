@@ -2,6 +2,7 @@ package io.spring.batch.helloworldbatch.job;
 
 import io.spring.batch.helloworldbatch.domain.Customer;
 import io.spring.batch.helloworldbatch.mapper.TransactionFieldSetMapper;
+import io.spring.batch.helloworldbatch.reader.CustomerFileReader;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -16,7 +17,6 @@ import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.mapping.PatternMatchingCompositeLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.LineTokenizer;
-import org.springframework.batch.item.file.transform.PatternMatchingCompositeLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -47,7 +47,8 @@ public class MultiLineJob {
     public Step multiLineStep() {
         return this.stepBuilderFactory.get("multiLineStep")
                 .<Customer, Customer>chunk(10)
-                .reader(customerItemReader(null))
+//                .reader(customerItemReader(null))
+                .reader(new CustomerFileReader(customerItemReader(null)))
                 .writer(itemWriter())
                 .build();
     }

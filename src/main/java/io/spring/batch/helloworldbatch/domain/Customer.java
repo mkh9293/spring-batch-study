@@ -1,27 +1,24 @@
 package io.spring.batch.helloworldbatch.domain;
 
+import java.util.List;
+
 public class Customer {
     private String firstName;
     private String middleInitial;
     private String lastName;
-    private String addressNumber;
-    private String street;
+    private String address;
     private String city;
     private String state;
     private String zipCode;
 
-    public Customer() {
+    private List<Transaction> transactions;
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public Customer(String firstName, String middleInitial, String lastName, String addressNumber, String street, String city, String state, String zipCode) {
-        this.firstName = firstName;
-        this.middleInitial = middleInitial;
-        this.lastName = lastName;
-        this.addressNumber = addressNumber;
-        this.street = street;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     public String getFirstName() {
@@ -48,20 +45,12 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public String getAddressNumber() {
-        return addressNumber;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressNumber(String addressNumber) {
-        this.addressNumber = addressNumber;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {
@@ -90,15 +79,22 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "firstName='" + firstName + '\'' +
-                ", middleInitial='" + middleInitial + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", addressNumber='" + addressNumber + '\'' +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                '}';
+        StringBuilder output = new StringBuilder();
+
+        output.append(firstName);
+        output.append(" ");
+        output.append(middleInitial);
+        output.append(". ");
+        output.append(lastName);
+
+        if(transactions != null && transactions.size() > 0) {
+            output.append(" has ");
+            output.append(transactions.size());
+            output.append(" transactions.");
+        } else {
+            output.append(" has no transactions.");
+        }
+
+        return output.toString();
     }
 }
