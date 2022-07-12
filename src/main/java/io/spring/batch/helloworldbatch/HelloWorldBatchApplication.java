@@ -1,6 +1,7 @@
 package io.spring.batch.helloworldbatch;
 
 import io.spring.batch.helloworldbatch.job.FixedWidthJob;
+import io.spring.batch.helloworldbatch.job.MultiLineJob;
 import org.springframework.boot.SpringApplication;
 
 public class HelloWorldBatchApplication {
@@ -13,7 +14,8 @@ public class HelloWorldBatchApplication {
 //        SpringApplication.run(NoRunJob.class, args);
 //        SpringApplication.run(RestApplication.class, args);
 //        SpringApplication.run(QuartzJobConfiguration.class, args);
-        SpringApplication.run(FixedWidthJob.class, args);
+//        SpringApplication.run(FixedWidthJob.class, args);
+        SpringApplication.run(MultiLineJob.class, args);
     }
 
 }
