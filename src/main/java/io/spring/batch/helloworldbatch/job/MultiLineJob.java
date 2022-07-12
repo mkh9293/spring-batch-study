@@ -28,113 +28,113 @@ import org.springframework.core.io.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
-@EnableBatchProcessing
-@SpringBootApplication
+//@EnableBatchProcessing
+//@SpringBootApplication
 public class MultiLineJob {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
-
-    @Bean
-    public Job job() {
-        return this.jobBuilderFactory.get("multiLineJob")
-                .start(multiLineStep())
-                .build();
-    }
-
-    @Bean
-    @StepScope
-    public MultiResourceItemReader multiResourceItemReader(
-            @Value("#{jobParameters['customerFile']}") Resource[] inputFiles
-    ) {
-        return new MultiResourceItemReaderBuilder<>()
-                .name("multiCustomerReader")
-                .resources(inputFiles)
-                .delegate(new CustomerFileReader(customerItemReader()))
-                .build();
-    }
-
-    @Bean
-    public Step multiLineStep() {
-        return this.stepBuilderFactory.get("multiLineStep")
-                .<Customer, Customer>chunk(10)
-//                .reader(customerItemReader(null))
-//                .reader(new CustomerFileReader(customerItemReader(null)))
-                .reader(multiResourceItemReader(null))
-                .writer(itemWriter())
-                .build();
-    }
-
-    @Bean
-    public ItemWriter itemWriter() {
-        return (items) -> items.forEach(System.out::println);
-    }
-
-    @Bean
-    @StepScope
-    public FlatFileItemReader customerItemReader() {
-        return new FlatFileItemReaderBuilder<Customer>()
-                .name("customerItemReader")
-                .lineMapper(lineTokenizer())
-                .build();
-    }
-
+//    @Autowired
+//    private JobBuilderFactory jobBuilderFactory;
+//
+//    @Autowired
+//    private StepBuilderFactory stepBuilderFactory;
+//
+//    @Bean
+//    public Job job() {
+//        return this.jobBuilderFactory.get("multiLineJob")
+//                .start(multiLineStep())
+//                .build();
+//    }
+//
 //    @Bean
 //    @StepScope
-//    public FlatFileItemReader customerItemReader(
-//            @Value("#{jobParameters['customerFile']}") Resource inputFile
+//    public MultiResourceItemReader multiResourceItemReader(
+//            @Value("#{jobParameters['customerFile']}") Resource[] inputFiles
 //    ) {
+//        return new MultiResourceItemReaderBuilder<>()
+//                .name("multiCustomerReader")
+//                .resources(inputFiles)
+//                .delegate(new CustomerFileReader(customerItemReader()))
+//                .build();
+//    }
+//
+//    @Bean
+//    public Step multiLineStep() {
+//        return this.stepBuilderFactory.get("multiLineStep")
+//                .<Customer, Customer>chunk(10)
+////                .reader(customerItemReader(null))
+////                .reader(new CustomerFileReader(customerItemReader(null)))
+//                .reader(multiResourceItemReader(null))
+//                .writer(itemWriter())
+//                .build();
+//    }
+//
+//    @Bean
+//    public ItemWriter itemWriter() {
+//        return (items) -> items.forEach(System.out::println);
+//    }
+//
+//    @Bean
+//    @StepScope
+//    public FlatFileItemReader customerItemReader() {
 //        return new FlatFileItemReaderBuilder<Customer>()
 //                .name("customerItemReader")
 //                .lineMapper(lineTokenizer())
-//                .resource(inputFile)
 //                .build();
 //    }
-
-    @Bean
-    public PatternMatchingCompositeLineMapper lineTokenizer() {
-        Map<String, LineTokenizer> lineTokenizerMap = new HashMap<>(2);
-
-        lineTokenizerMap.put("CUST*", customerLineTokenizer());
-        lineTokenizerMap.put("TRANS*", transactionLineTokenizer());
-
-        Map<String, FieldSetMapper> fieldSetMapperMap = new HashMap<>(2);
-
-        BeanWrapperFieldSetMapper<Customer> customerFieldSetMapper = new BeanWrapperFieldSetMapper<>();
-        customerFieldSetMapper.setTargetType(Customer.class);
-
-        fieldSetMapperMap.put("CUST*", customerFieldSetMapper);
-        fieldSetMapperMap.put("TRANS*", new TransactionFieldSetMapper());
-
-        PatternMatchingCompositeLineMapper lineMapper = new PatternMatchingCompositeLineMapper();
-
-        lineMapper.setTokenizers(lineTokenizerMap);
-        lineMapper.setFieldSetMappers(fieldSetMapperMap);
-
-        return lineMapper;
-    }
-
-    @Bean
-    public DelimitedLineTokenizer transactionLineTokenizer() {
-        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-
-        lineTokenizer.setNames("prefix", "accountNumber", "transactionDate", "amount");
-
-        return lineTokenizer;
-    }
-
-    @Bean
-    public DelimitedLineTokenizer customerLineTokenizer() {
-        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-
-        lineTokenizer.setNames("firstName", "middleInitial", "lastName", "address", "city", "state","zipCode");
-        lineTokenizer.setIncludedFields(1, 2, 3, 4, 5, 6, 7);
-
-        return lineTokenizer;
-    }
+//
+////    @Bean
+////    @StepScope
+////    public FlatFileItemReader customerItemReader(
+////            @Value("#{jobParameters['customerFile']}") Resource inputFile
+////    ) {
+////        return new FlatFileItemReaderBuilder<Customer>()
+////                .name("customerItemReader")
+////                .lineMapper(lineTokenizer())
+////                .resource(inputFile)
+////                .build();
+////    }
+//
+//    @Bean
+//    public PatternMatchingCompositeLineMapper lineTokenizer() {
+//        Map<String, LineTokenizer> lineTokenizerMap = new HashMap<>(2);
+//
+//        lineTokenizerMap.put("CUST*", customerLineTokenizer());
+//        lineTokenizerMap.put("TRANS*", transactionLineTokenizer());
+//
+//        Map<String, FieldSetMapper> fieldSetMapperMap = new HashMap<>(2);
+//
+//        BeanWrapperFieldSetMapper<Customer> customerFieldSetMapper = new BeanWrapperFieldSetMapper<>();
+//        customerFieldSetMapper.setTargetType(Customer.class);
+//
+//        fieldSetMapperMap.put("CUST*", customerFieldSetMapper);
+//        fieldSetMapperMap.put("TRANS*", new TransactionFieldSetMapper());
+//
+//        PatternMatchingCompositeLineMapper lineMapper = new PatternMatchingCompositeLineMapper();
+//
+//        lineMapper.setTokenizers(lineTokenizerMap);
+//        lineMapper.setFieldSetMappers(fieldSetMapperMap);
+//
+//        return lineMapper;
+//    }
+//
+//    @Bean
+//    public DelimitedLineTokenizer transactionLineTokenizer() {
+//        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+//
+//        lineTokenizer.setNames("prefix", "accountNumber", "transactionDate", "amount");
+//
+//        return lineTokenizer;
+//    }
+//
+//    @Bean
+//    public DelimitedLineTokenizer customerLineTokenizer() {
+//        DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
+//
+//        lineTokenizer.setNames("firstName", "middleInitial", "lastName", "address", "city", "state","zipCode");
+//        lineTokenizer.setIncludedFields(1, 2, 3, 4, 5, 6, 7);
+//
+//        return lineTokenizer;
+//    }
 
 
 
