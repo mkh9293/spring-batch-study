@@ -1,9 +1,6 @@
 package io.spring.batch.helloworldbatch;
 
-import io.spring.batch.helloworldbatch.job.FixedWidthJob;
-import io.spring.batch.helloworldbatch.job.JdbcCursorJob;
-import io.spring.batch.helloworldbatch.job.MultiLineJob;
-import io.spring.batch.helloworldbatch.job.XmlJob;
+import io.spring.batch.helloworldbatch.job.*;
 import org.springframework.boot.SpringApplication;
 
 public class HelloWorldBatchApplication {
@@ -19,7 +16,8 @@ public class HelloWorldBatchApplication {
 //        SpringApplication.run(FixedWidthJob.class, args);
 //        SpringApplication.run(MultiLineJob.class, args);
 //        SpringApplication.run(XmlJob.class, args);
-        SpringApplication.run(JdbcCursorJob.class, args);
+//        SpringApplication.run(JdbcCursorJob.class, args);
+        SpringApplication.run(JdbcPagingJob.class, args);
     }
 
 }
