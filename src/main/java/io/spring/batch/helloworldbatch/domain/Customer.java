@@ -7,6 +7,8 @@ import java.util.List;
 
 //@XmlRootElement
 public class Customer {
+
+    private Long id;
     private String firstName;
     private String middleInitial;
     private String lastName;
@@ -15,16 +17,24 @@ public class Customer {
     private String state;
     private String zipCode;
 
-    private List<Transaction> transactions;
+//    private List<Transaction> transactions;
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
+//    public List<Transaction> getTransactions() {
+//        return transactions;
+//    }
 
 //    @XmlElementWrapper(name = "transactions")
 //    @XmlElement(name = "transaction")
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
+//    public void setTransactions(List<Transaction> transactions) {
+//        this.transactions = transactions;
+//    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -85,22 +95,36 @@ public class Customer {
 
     @Override
     public String toString() {
-        StringBuilder output = new StringBuilder();
-
-        output.append(firstName);
-        output.append(" ");
-        output.append(middleInitial);
-        output.append(". ");
-        output.append(lastName);
-
-        if(transactions != null && transactions.size() > 0) {
-            output.append(" has ");
-            output.append(transactions.size());
-            output.append(" transactions.");
-        } else {
-            output.append(" has no transactions.");
-        }
-
-        return output.toString();
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleInitial='" + middleInitial + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
     }
+
+    //    @Override
+//    public String toString() {
+//        StringBuilder output = new StringBuilder();
+//
+//        output.append(firstName);
+//        output.append(" ");
+//        output.append(middleInitial);
+//        output.append(". ");
+//        output.append(lastName);
+//
+//        if(transactions != null && transactions.size() > 0) {
+//            output.append(" has ");
+//            output.append(transactions.size());
+//            output.append(" transactions.");
+//        } else {
+//            output.append(" has no transactions.");
+//        }
+//
+//        return output.toString();
+//    }
 }
