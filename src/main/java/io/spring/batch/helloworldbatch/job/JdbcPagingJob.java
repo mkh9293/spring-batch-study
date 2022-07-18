@@ -22,67 +22,67 @@ import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
-@EnableBatchProcessing
-@SpringBootApplication
+//@EnableBatchProcessing
+//@SpringBootApplication
 public class JdbcPagingJob {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
-
-    @Bean
-    public Job job() {
-        return this.jobBuilderFactory.get("job")
-                .start(step())
-                .build();
-    }
-
-    @Bean
-    public Step step() {
-        return this.stepBuilderFactory.get("step")
-                .<Customer, Customer>chunk(10)
-                .reader(customerItemReader(null, null, null))
-                .writer(itemWriter())
-                .build();
-    }
-
-    @Bean
-    @StepScope
-    public JdbcPagingItemReader<Customer> customerItemReader(
-            DataSource dataSource,
-            PagingQueryProvider pagingQueryProvider,
-            @Value("#{jobParameters['city']}") String city
-    ) {
-        Map<String, Object> parameterValues = new HashMap<>(1);
-        parameterValues.put("city", city);
-
-        return new JdbcPagingItemReaderBuilder<Customer>()
-                .name("customerItemReader")
-                .dataSource(dataSource)
-                .queryProvider(pagingQueryProvider)
-                .parameterValues(parameterValues)
-                .pageSize(10)
-                .rowMapper(new CustomerRowMapper())
-                .build();
-    }
-
-    @Bean
-    public SqlPagingQueryProviderFactoryBean pagingQueryProviderFactoryBean(DataSource dataSource) {
-        SqlPagingQueryProviderFactoryBean factoryBean = new SqlPagingQueryProviderFactoryBean();
-
-        factoryBean.setSelectClause("select *");
-        factoryBean.setFromClause("from customer");
-        factoryBean.setWhereClause("where city = :city");
-        factoryBean.setSortKey("lastName");
-        factoryBean.setDataSource(dataSource);
-
-        return factoryBean;
-    }
-
-    @Bean
-    public ItemWriter itemWriter() {
-        return (items) -> items.forEach(System.out::println);
-    }
+//    @Autowired
+//    private JobBuilderFactory jobBuilderFactory;
+//
+//    @Autowired
+//    private StepBuilderFactory stepBuilderFactory;
+//
+//    @Bean
+//    public Job job() {
+//        return this.jobBuilderFactory.get("job")
+//                .start(step())
+//                .build();
+//    }
+//
+//    @Bean
+//    public Step step() {
+//        return this.stepBuilderFactory.get("step")
+//                .<Customer, Customer>chunk(10)
+//                .reader(customerItemReader(null, null, null))
+//                .writer(itemWriter())
+//                .build();
+//    }
+//
+//    @Bean
+//    @StepScope
+//    public JdbcPagingItemReader<Customer> customerItemReader(
+//            DataSource dataSource,
+//            PagingQueryProvider pagingQueryProvider,
+//            @Value("#{jobParameters['city']}") String city
+//    ) {
+//        Map<String, Object> parameterValues = new HashMap<>(1);
+//        parameterValues.put("city", city);
+//
+//        return new JdbcPagingItemReaderBuilder<Customer>()
+//                .name("customerItemReader")
+//                .dataSource(dataSource)
+//                .queryProvider(pagingQueryProvider)
+//                .parameterValues(parameterValues)
+//                .pageSize(10)
+//                .rowMapper(new CustomerRowMapper())
+//                .build();
+//    }
+//
+//    @Bean
+//    public SqlPagingQueryProviderFactoryBean pagingQueryProviderFactoryBean(DataSource dataSource) {
+//        SqlPagingQueryProviderFactoryBean factoryBean = new SqlPagingQueryProviderFactoryBean();
+//
+//        factoryBean.setSelectClause("select *");
+//        factoryBean.setFromClause("from customer");
+//        factoryBean.setWhereClause("where city = :city");
+//        factoryBean.setSortKey("lastName");
+//        factoryBean.setDataSource(dataSource);
+//
+//        return factoryBean;
+//    }
+//
+//    @Bean
+//    public ItemWriter itemWriter() {
+//        return (items) -> items.forEach(System.out::println);
+//    }
 }

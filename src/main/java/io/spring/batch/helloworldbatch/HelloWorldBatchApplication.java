@@ -17,7 +17,8 @@ public class HelloWorldBatchApplication {
 //        SpringApplication.run(MultiLineJob.class, args);
 //        SpringApplication.run(XmlJob.class, args);
 //        SpringApplication.run(JdbcCursorJob.class, args);
-        SpringApplication.run(JdbcPagingJob.class, args);
+//        SpringApplication.run(JdbcPagingJob.class, args);
+        SpringApplication.run(HibernateCursorJob.class, args);
     }
 
 }

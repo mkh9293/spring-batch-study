@@ -1,23 +1,47 @@
 package io.spring.batch.helloworldbatch.domain;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
+import javax.persistence.*;
+import java.io.Serializable;
+//import javax.xml.bind.annotation.XmlElement;
+//import javax.xml.bind.annotation.XmlElementWrapper;
+//import javax.xml.bind.annotation.XmlRootElement;
+//import java.util.List;
 
 //@XmlRootElement
-public class Customer {
+@Entity
+@Table(name = "Customer")
+public class Customer implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "firstName")
     private String firstName;
+
+    @Column(name = "middleInitial")
     private String middleInitial;
+
+    @Column(name = "lastName")
     private String lastName;
+
     private String address;
     private String city;
     private String state;
     private String zipCode;
 
-//    private List<Transaction> transactions;
+    public Customer(Long id, String firstName, String middleInitial, String lastName, String address, String city, String state, String zipCode) {
+        this.id = id;
+        this.firstName = firstName;
+        this.middleInitial = middleInitial;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
+    //    private List<Transaction> transactions;
 
 //    public List<Transaction> getTransactions() {
 //        return transactions;
@@ -28,6 +52,8 @@ public class Customer {
 //    public void setTransactions(List<Transaction> transactions) {
 //        this.transactions = transactions;
 //    }
+
+    public Customer(){}
 
     public Long getId() {
         return id;
