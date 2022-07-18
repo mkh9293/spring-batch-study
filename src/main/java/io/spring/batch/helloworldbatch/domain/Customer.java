@@ -1,5 +1,9 @@
 package io.spring.batch.helloworldbatch.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
 //import javax.xml.bind.annotation.XmlElement;
@@ -7,53 +11,42 @@ import java.io.Serializable;
 //import javax.xml.bind.annotation.XmlRootElement;
 //import java.util.List;
 
-//@XmlRootElement
 @Entity
 @Table(name = "Customer")
-public class Customer implements Serializable {
+public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "firstName")
     private String firstName;
-
     @Column(name = "middleInitial")
     private String middleInitial;
-
     @Column(name = "lastName")
     private String lastName;
-
+    //	private String addressNumber;
+//	private String street;
     private String address;
     private String city;
     private String state;
     private String zipCode;
 
-    public Customer(Long id, String firstName, String middleInitial, String lastName, String address, String city, String state, String zipCode) {
-        this.id = id;
-        this.firstName = firstName;
-        this.middleInitial = middleInitial;
-        this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-    }
+//	private List<Transaction> transactions;
 
-    //    private List<Transaction> transactions;
-
-//    public List<Transaction> getTransactions() {
-//        return transactions;
+//    public Customer() {
 //    }
 
-//    @XmlElementWrapper(name = "transactions")
-//    @XmlElement(name = "transaction")
-//    public void setTransactions(List<Transaction> transactions) {
-//        this.transactions = transactions;
-//    }
-
-    public Customer(){}
+//	public Customer(String firstName, String middleName, String lastName, String addressNumber, String street, String city, String state, String zipCode) {
+//		this.firstName = firstName;
+//		this.middleName = middleName;
+//		this.lastName = lastName;
+//		this.addressNumber = addressNumber;
+//		this.street = street;
+//		this.city = city;
+//		this.state = state;
+//		this.zipCode = zipCode;
+//	}
 
     public Long getId() {
         return id;
@@ -87,6 +80,23 @@ public class Customer implements Serializable {
         this.lastName = lastName;
     }
 
+//	public String getAddressNumber() {
+//		return addressNumber;
+//	}
+//
+//	public void setAddressNumber(String addressNumber) {
+//		this.addressNumber = addressNumber;
+//	}
+//
+//	public String getStreet() {
+//		return street;
+//	}
+//
+//	public void setStreet(String street) {
+//		this.street = street;
+//	}
+
+
     public String getAddress() {
         return address;
     }
@@ -119,6 +129,16 @@ public class Customer implements Serializable {
         this.zipCode = zipCode;
     }
 
+//	public List<Transaction> getTransactions() {
+//		return transactions;
+//	}
+//
+//	@XmlElementWrapper(name = "transactions")
+//	@XmlElement(name = "transaction")
+//	public void setTransactions(List<Transaction> transactions) {
+//		this.transactions = transactions;
+//	}
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -133,24 +153,40 @@ public class Customer implements Serializable {
                 '}';
     }
 
-    //    @Override
-//    public String toString() {
-//        StringBuilder output = new StringBuilder();
+//	@Override
+//	public String toString() {
+//		StringBuilder output = new StringBuilder();
 //
-//        output.append(firstName);
-//        output.append(" ");
-//        output.append(middleInitial);
-//        output.append(". ");
-//        output.append(lastName);
+//		output.append(firstName);
+//		output.append(" ");
+//		output.append(middleInitial);
+//		output.append(". ");
+//		output.append(lastName);
 //
-//        if(transactions != null && transactions.size() > 0) {
-//            output.append(" has ");
-//            output.append(transactions.size());
-//            output.append(" transactions.");
-//        } else {
-//            output.append(" has no transactions.");
-//        }
+//		if(transactions != null&& transactions.size() > 0) {
+//			output.append(" has ");
+//			output.append(transactions.size());
+//			output.append(" transactions.");
+//		} else {
+//			output.append(" has no transactions.");
+//		}
 //
-//        return output.toString();
-//    }
+//		return output.toString();
+//	}
+
+    //	@Override
+//	public String toString() {
+//		return "Customer{" +
+//				"firstName='" + firstName + '\'' +
+//				", middleInitial='" + middleInitial + '\'' +
+//				", lastName='" + lastName + '\'' +
+//				", address='" + address + '\'' +
+////				", addressNumber='" + addressNumber + '\'' +
+////				", street='" + street + '\'' +
+//				", city='" + city + '\'' +
+//				", state='" + state + '\'' +
+//				", zipCode='" + zipCode + '\'' +
+//				'}';
+//	}
+
 }

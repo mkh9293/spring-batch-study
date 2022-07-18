@@ -21,66 +21,66 @@ import org.springframework.context.annotation.Bean;
 import javax.persistence.EntityManagerFactory;
 import java.util.Collections;
 
-@EnableBatchProcessing
-@SpringBootApplication
+//@EnableBatchProcessing
+//@SpringBootApplication
 public class HibernateCursorJob {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
-
-    @Bean
-    public Job job() {
-		return this.jobBuilderFactory.get("hibernateCursorJob")
-				.start(copyFileStep())
-				.build();
-	}
-
-    @Bean
-    public Step copyFileStep() {
-        return this.stepBuilderFactory.get("copyFileStep")
-                .<Customer, Customer>chunk(10)
-                .reader(customerItemReader(null, null))
-                .writer(itemWriter())
-                .build();
-    }
-
+//    @Autowired
+//    private JobBuilderFactory jobBuilderFactory;
+//
+//    @Autowired
+//    private StepBuilderFactory stepBuilderFactory;
+//
+//    @Bean
+//    public Job job() {
+//		return this.jobBuilderFactory.get("hibernateCursorJob")
+//				.start(copyFileStep())
+//				.build();
+//	}
+//
+//    @Bean
+//    public Step copyFileStep() {
+//        return this.stepBuilderFactory.get("copyFileStep")
+//                .<Customer, Customer>chunk(10)
+//                .reader(customerItemReader(null, null))
+//                .writer(itemWriter())
+//                .build();
+//    }
+//
+////    @Bean
+////    @StepScope
+////    public HibernateCursorItemReader<Customer> customerItemReader(
+////            EntityManagerFactory entityManagerFactory,
+////            @Value("#{jobParameters['city']}") String city
+////    ) {
+////
+////        return new HibernateCursorItemReaderBuilder<Customer>()
+////                .name("customerItemReader")
+////                .sessionFactory(entityManagerFactory.unwrap(SessionFactory.class))
+////                .queryString("from Customer where city = :city")
+////                .parameterValues(Collections.singletonMap("city", city))
+////                .build();
+////    }
+//
 //    @Bean
 //    @StepScope
-//    public HibernateCursorItemReader<Customer> customerItemReader(
-//            EntityManagerFactory entityManagerFactory,
-//            @Value("#{jobParameters['city']}") String city
+//    public HibernatePagingItemReader<Customer> customerItemReader(
+//        EntityManagerFactory entityManagerFactory,
+//        @Value("#{jobParameters['city']}") String city
 //    ) {
 //
-//        return new HibernateCursorItemReaderBuilder<Customer>()
+//        return new HibernatePagingItemReaderBuilder<Customer>()
 //                .name("customerItemReader")
 //                .sessionFactory(entityManagerFactory.unwrap(SessionFactory.class))
 //                .queryString("from Customer where city = :city")
 //                .parameterValues(Collections.singletonMap("city", city))
+//                .pageSize(10)
 //                .build();
 //    }
-
-    @Bean
-    @StepScope
-    public HibernatePagingItemReader<Customer> customerItemReader(
-        EntityManagerFactory entityManagerFactory,
-        @Value("#{jobParameters['city']}") String city
-    ) {
-
-        return new HibernatePagingItemReaderBuilder<Customer>()
-                .name("customerItemReader")
-                .sessionFactory(entityManagerFactory.unwrap(SessionFactory.class))
-                .queryString("from Customer where city = :city")
-                .parameterValues(Collections.singletonMap("city", city))
-                .pageSize(10)
-                .build();
-    }
-
-    @Bean
-	public ItemWriter<Customer> itemWriter() {
-		return (items) -> items.forEach(System.out::println);
-	}
+//
+//    @Bean
+//	public ItemWriter<Customer> itemWriter() {
+//		return (items) -> items.forEach(System.out::println);
+//	}
 
 }
