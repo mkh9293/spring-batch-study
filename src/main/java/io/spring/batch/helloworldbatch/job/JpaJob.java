@@ -19,53 +19,53 @@ import org.springframework.context.annotation.Bean;
 import javax.persistence.EntityManagerFactory;
 import java.util.Collections;
 
-@EnableBatchProcessing
-@SpringBootApplication
+//@EnableBatchProcessing
+//@SpringBootApplication
 public class JpaJob {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
-
-    @Bean
-    @StepScope
-    public JpaPagingItemReader<Customer> customerItemReader(
-        EntityManagerFactory entityManagerFactory,
-        @Value("#{jobParameters['city']}") String city
-    ) {
-        CustomerByCityQueryProvider queryProvider = new CustomerByCityQueryProvider();
-        queryProvider.setCityName(city);
-
-        return new JpaPagingItemReaderBuilder<Customer>()
-                .name("customerItemReader")
-                .entityManagerFactory(entityManagerFactory)
-//                .queryString("SELECT c FROM Customer c WHERE c.city = :city")
-                .queryProvider(queryProvider)
-                .parameterValues(Collections.singletonMap("city", city))
-                .build();
-    }
-
-    @Bean
-    public Job job() {
-		return this.jobBuilderFactory.get("jpajob")
-				.start(copyFileStep())
-				.build();
-	}
-
-    @Bean
-    public Step copyFileStep() {
-        return this.stepBuilderFactory.get("copyFileStep")
-                .<Customer, Customer>chunk(10)
-                .reader(customerItemReader(null, null))
-                .writer(itemWriter())
-                .build();
-    }
-
-    @Bean
-	public ItemWriter<Customer> itemWriter() {
-		return (items) -> items.forEach(System.out::println);
-	}
+//    @Autowired
+//    private JobBuilderFactory jobBuilderFactory;
+//
+//    @Autowired
+//    private StepBuilderFactory stepBuilderFactory;
+//
+//    @Bean
+//    @StepScope
+//    public JpaPagingItemReader<Customer> customerItemReader(
+//        EntityManagerFactory entityManagerFactory,
+//        @Value("#{jobParameters['city']}") String city
+//    ) {
+//        CustomerByCityQueryProvider queryProvider = new CustomerByCityQueryProvider();
+//        queryProvider.setCityName(city);
+//
+//        return new JpaPagingItemReaderBuilder<Customer>()
+//                .name("customerItemReader")
+//                .entityManagerFactory(entityManagerFactory)
+////                .queryString("SELECT c FROM Customer c WHERE c.city = :city")
+//                .queryProvider(queryProvider)
+//                .parameterValues(Collections.singletonMap("city", city))
+//                .build();
+//    }
+//
+//    @Bean
+//    public Job job() {
+//		return this.jobBuilderFactory.get("jpajob")
+//				.start(copyFileStep())
+//				.build();
+//	}
+//
+//    @Bean
+//    public Step copyFileStep() {
+//        return this.stepBuilderFactory.get("copyFileStep")
+//                .<Customer, Customer>chunk(10)
+//                .reader(customerItemReader(null, null))
+//                .writer(itemWriter())
+//                .build();
+//    }
+//
+//    @Bean
+//	public ItemWriter<Customer> itemWriter() {
+//		return (items) -> items.forEach(System.out::println);
+//	}
 
 }

@@ -1,26 +1,26 @@
 package io.spring.batch.helloworldbatch.job;
 
-import io.spring.batch.helloworldbatch.domain.Customer;
-import io.spring.batch.helloworldbatch.mapper.CustomerRowMapper;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.database.JdbcPagingItemReader;
-import org.springframework.batch.item.database.PagingQueryProvider;
-import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
-import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import javax.sql.DataSource;
-import java.util.HashMap;
-import java.util.Map;
+//import io.spring.batch.helloworldbatch.domain.Customer;
+//import io.spring.batch.helloworldbatch.mapper.CustomerRowMapper;
+//import org.springframework.batch.core.Job;
+//import org.springframework.batch.core.Step;
+//import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+//import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+//import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+//import org.springframework.batch.core.configuration.annotation.StepScope;
+//import org.springframework.batch.item.ItemWriter;
+//import org.springframework.batch.item.database.JdbcPagingItemReader;
+//import org.springframework.batch.item.database.PagingQueryProvider;
+//import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
+//import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.context.annotation.Bean;
+//
+//import javax.sql.DataSource;
+//import java.util.HashMap;
+//import java.util.Map;
 
 //@EnableBatchProcessing
 //@SpringBootApplication

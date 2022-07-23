@@ -1,4 +1,4 @@
-package io.spring.batch.helloworldbatch.domain;
+package com.example.jpabatch;
 
 import javax.persistence.*;
 
