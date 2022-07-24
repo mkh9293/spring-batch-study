@@ -21,52 +21,52 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.Collections;
 
-@EnableBatchProcessing
-@SpringBootApplication
-@EnableJpaRepositories({"io.spring.batch.helloworldbatch.repository"})
-@EntityScan(basePackages="io.spring.batch.helloworldbatch")
+//@EnableBatchProcessing
+//@SpringBootApplication
+//@EnableJpaRepositories({"io.spring.batch.helloworldbatch.repository"})
+//@EntityScan(basePackages="io.spring.batch.helloworldbatch")
 public class SpringDataRepositoryJob {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
-
-    @Bean
-	@StepScope
-	public RepositoryItemReader<Customer> customerItemReader(
-			CustomerRepository customerRepository,
-            @Value("#{jobParameters['city']}") String city
-	) {
-    	return new RepositoryItemReaderBuilder<Customer>()
-				.name("customerItemReader")
-				.arguments(Collections.singletonList(city))
-				.methodName("findByCity")
-				.repository(customerRepository)
-				.sorts(Collections.singletonMap("lastName", Sort.Direction.ASC))
-				.build();
-	}
-
-    @Bean
-	public ItemWriter<Customer> itemWriter() {
-		return (items) -> items.forEach(System.out::println);
-	}
-
-	@Bean
-	public Step copyFileStep() {
-		return this.stepBuilderFactory.get("copyFileStep")
-				.<Customer, Customer>chunk(10)
-				.reader(customerItemReader(null, null))
-				.writer(itemWriter())
-				.build();
-	}
-
-	@Bean
-	public Job job() {
-		return this.jobBuilderFactory.get("job")
-				.start(copyFileStep())
-				.build();
-	}
+//    @Autowired
+//    private JobBuilderFactory jobBuilderFactory;
+//
+//    @Autowired
+//    private StepBuilderFactory stepBuilderFactory;
+//
+//    @Bean
+//	@StepScope
+//	public RepositoryItemReader<Customer> customerItemReader(
+//			CustomerRepository customerRepository,
+//            @Value("#{jobParameters['city']}") String city
+//	) {
+//    	return new RepositoryItemReaderBuilder<Customer>()
+//				.name("customerItemReader")
+//				.arguments(Collections.singletonList(city))
+//				.methodName("findByCity")
+//				.repository(customerRepository)
+//				.sorts(Collections.singletonMap("lastName", Sort.Direction.ASC))
+//				.build();
+//	}
+//
+//    @Bean
+//	public ItemWriter<Customer> itemWriter() {
+//		return (items) -> items.forEach(System.out::println);
+//	}
+//
+//	@Bean
+//	public Step copyFileStep() {
+//		return this.stepBuilderFactory.get("copyFileStep")
+//				.<Customer, Customer>chunk(10)
+//				.reader(customerItemReader(null, null))
+//				.writer(itemWriter())
+//				.build();
+//	}
+//
+//	@Bean
+//	public Job job() {
+//		return this.jobBuilderFactory.get("job")
+//				.start(copyFileStep())
+//				.build();
+//	}
 
 }

@@ -22,7 +22,8 @@ public class HelloWorldBatchApplication {
 //        SpringApplication.run(HibernateCursorJob.class, args);
 //        SpringApplication.run(JpaJob.class, args);
 //        SpringApplication.run(StoredProcedureJob.class, args);
-        SpringApplication.run(SpringDataRepositoryJob.class, args);
+//        SpringApplication.run(SpringDataRepositoryJob.class, args);
+        SpringApplication.run(ExistingServiceJob.class, args);
     }
 
 }
