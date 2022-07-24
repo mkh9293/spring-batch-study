@@ -2,6 +2,7 @@ package io.spring.batch.helloworldbatch;
 
 import io.spring.batch.helloworldbatch.job.*;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 public class HelloWorldBatchApplication {
 
@@ -20,7 +21,8 @@ public class HelloWorldBatchApplication {
 //        SpringApplication.run(JdbcPagingJob.class, args);
 //        SpringApplication.run(HibernateCursorJob.class, args);
 //        SpringApplication.run(JpaJob.class, args);
-        SpringApplication.run(StoredProcedureJob.class, args);
+//        SpringApplication.run(StoredProcedureJob.class, args);
+        SpringApplication.run(SpringDataRepositoryJob.class, args);
     }
 
 }
