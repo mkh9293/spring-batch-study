@@ -9,7 +9,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
-@Component
+//@Component
 public class HibernateBatchConfigurer extends DefaultBatchConfigurer {
 
     private DataSource dataSource;
