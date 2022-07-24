@@ -1,15 +1,19 @@
 package io.spring.batch.helloworldbatch.reader;
 
 import io.spring.batch.helloworldbatch.domain.Customer;
+import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemStreamException;
+import org.springframework.batch.item.ItemStreamSupport;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class CustomerItemReader implements ItemReader<Customer> {
+public class CustomerItemReader extends ItemStreamSupport implements ItemReader<Customer> {
     private List<Customer> customers;
     private int curIndex;
+    private String INDEX_KEY = "current.index.customers";
 
     private String [] firstNames = {"Michael", "Warren", "Ann", "Terrence",
             "Erica", "Laura", "Steve", "Larry"};
@@ -60,6 +64,10 @@ public class CustomerItemReader implements ItemReader<Customer> {
     public Customer read() {
         Customer cust = null;
 
+        if(curIndex == 50) {
+            throw new RuntimeException("This will end your execution");
+        }
+
         if(curIndex < customers.size()) {
             cust = customers.get(curIndex);
             curIndex++;
@@ -67,4 +75,27 @@ public class CustomerItemReader implements ItemReader<Customer> {
 
         return cust;
     }
+
+    public void open(ExecutionContext executionContext) throws ItemStreamException {
+        if(executionContext.containsKey(getExecutionContextKey(INDEX_KEY))) {
+            int index = executionContext.getInt(getExecutionContextKey(INDEX_KEY));
+
+            if(index == 50) {
+                curIndex = 51;
+            } else {
+                curIndex = index;
+            }
+
+        } else {
+            curIndex = 0;
+        }
+    }
+
+    public void update(ExecutionContext executionContext) throws ItemStreamException {
+        executionContext.putInt(getExecutionContextKey(INDEX_KEY), curIndex);
+    }
+
+    public void close() throws ItemStreamException {
+    }
+
 }

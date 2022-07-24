@@ -31,10 +31,17 @@ public class CustomInputJob {
     }
 
     @Bean
+    public CustomerItemReader customerItemReader() {
+        CustomerItemReader customerItemReader = new CustomerItemReader();
+        customerItemReader.setName("customerItemReader");
+        return customerItemReader;
+    }
+
+    @Bean
     public Step copyFileStep() {
         return this.stepBuilderFactory.get("copyFileStep")
                 .<Customer, Customer>chunk(10)
-                .reader(new CustomerItemReader())
+                .reader(customerItemReader())
                 .writer(itemWriter())
                 .build();
     }
