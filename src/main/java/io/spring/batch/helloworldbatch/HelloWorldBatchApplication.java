@@ -23,7 +23,8 @@ public class HelloWorldBatchApplication {
 //        SpringApplication.run(JpaJob.class, args);
 //        SpringApplication.run(StoredProcedureJob.class, args);
 //        SpringApplication.run(SpringDataRepositoryJob.class, args);
-        SpringApplication.run(ExistingServiceJob.class, args);
+//        SpringApplication.run(ExistingServiceJob.class, args);
+        SpringApplication.run(CustomInputJob.class, args);
     }
 
 }

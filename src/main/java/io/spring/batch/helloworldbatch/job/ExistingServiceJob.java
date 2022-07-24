@@ -14,45 +14,45 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-@EnableBatchProcessing
-@SpringBootApplication
-@ComponentScan(basePackages = {"io.spring.batch.helloworldbatch.service"})
+//@EnableBatchProcessing
+//@SpringBootApplication
+//@ComponentScan(basePackages = {"io.spring.batch.helloworldbatch.service"})
 public class ExistingServiceJob {
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
-
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
-
-    @Bean
-	public ItemReaderAdapter<Customer> customerItemReader(CustomerService customerService) {
-    	ItemReaderAdapter<Customer> adapter = new ItemReaderAdapter<>();
-
-    	adapter.setTargetObject(customerService);
-    	adapter.setTargetMethod("getCustomer");
-
-    	return adapter;
-	}
-
-    @Bean
-	public ItemWriter<Customer> itemWriter() {
-		return (items) -> items.forEach(System.out::println);
-	}
-
-	@Bean
-	public Step copyFileStep() {
-		return this.stepBuilderFactory.get("copyFileStep")
-				.<Customer, Customer>chunk(10)
-				.reader(customerItemReader(null))
-				.writer(itemWriter())
-				.build();
-	}
-
-	@Bean
-	public Job job() {
-		return this.jobBuilderFactory.get("job")
-				.start(copyFileStep())
-				.build();
-	}
+//    @Autowired
+//    private JobBuilderFactory jobBuilderFactory;
+//
+//    @Autowired
+//    private StepBuilderFactory stepBuilderFactory;
+//
+//    @Bean
+//	public ItemReaderAdapter<Customer> customerItemReader(CustomerService customerService) {
+//    	ItemReaderAdapter<Customer> adapter = new ItemReaderAdapter<>();
+//
+//    	adapter.setTargetObject(customerService);
+//    	adapter.setTargetMethod("getCustomer");
+//
+//    	return adapter;
+//	}
+//
+//    @Bean
+//	public ItemWriter<Customer> itemWriter() {
+//		return (items) -> items.forEach(System.out::println);
+//	}
+//
+//	@Bean
+//	public Step copyFileStep() {
+//		return this.stepBuilderFactory.get("copyFileStep")
+//				.<Customer, Customer>chunk(10)
+//				.reader(customerItemReader(null))
+//				.writer(itemWriter())
+//				.build();
+//	}
+//
+//	@Bean
+//	public Job job() {
+//		return this.jobBuilderFactory.get("job")
+//				.start(copyFileStep())
+//				.build();
+//	}
 }
