@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Service
+//@Service
 public class CustomerService {
     private List<Customer> customers;
     private int curIndex;

@@ -1,25 +1,25 @@
 package io.spring.batch.helloworldbatch.job;
 
-import io.spring.batch.helloworldbatch.listener.LoggingStepStartStopListener;
-import io.spring.batch.helloworldbatch.policy.RandomChunkSizePolicy;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.support.ListItemReader;
-import org.springframework.batch.repeat.CompletionPolicy;
-import org.springframework.batch.repeat.policy.CompositeCompletionPolicy;
-import org.springframework.batch.repeat.policy.SimpleCompletionPolicy;
-import org.springframework.batch.repeat.policy.TimeoutTerminationPolicy;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+//import io.spring.batch.helloworldbatch.listener.LoggingStepStartStopListener;
+//import io.spring.batch.helloworldbatch.policy.RandomChunkSizePolicy;
+//import org.springframework.batch.core.Job;
+//import org.springframework.batch.core.Step;
+//import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+//import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+//import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+//import org.springframework.batch.item.ItemWriter;
+//import org.springframework.batch.item.support.ListItemReader;
+//import org.springframework.batch.repeat.CompletionPolicy;
+//import org.springframework.batch.repeat.policy.CompositeCompletionPolicy;
+//import org.springframework.batch.repeat.policy.SimpleCompletionPolicy;
+//import org.springframework.batch.repeat.policy.TimeoutTerminationPolicy;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.context.annotation.Bean;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.UUID;
 
 //@EnableBatchProcessing
 //@SpringBootApplication

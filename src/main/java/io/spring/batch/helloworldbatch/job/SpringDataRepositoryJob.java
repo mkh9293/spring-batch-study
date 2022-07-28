@@ -1,25 +1,25 @@
 package io.spring.batch.helloworldbatch.job;
 
-import io.spring.batch.helloworldbatch.domain.Customer;
-import io.spring.batch.helloworldbatch.repository.CustomerRepository;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.data.RepositoryItemReader;
-import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+//import io.spring.batch.helloworldbatch.domain.Customer;
+//import io.spring.batch.helloworldbatch.repository.CustomerRepository;
+//import org.springframework.batch.core.Job;
+//import org.springframework.batch.core.Step;
+//import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+//import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+//import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+//import org.springframework.batch.core.configuration.annotation.StepScope;
+//import org.springframework.batch.item.ItemWriter;
+//import org.springframework.batch.item.data.RepositoryItemReader;
+//import org.springframework.batch.item.data.builder.RepositoryItemReaderBuilder;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.boot.autoconfigure.domain.EntityScan;
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.data.domain.Sort;
+//import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.util.Collections;
+//import java.util.Collections;
 
 //@EnableBatchProcessing
 //@SpringBootApplication

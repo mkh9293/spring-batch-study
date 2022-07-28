@@ -1,12 +1,12 @@
 package io.spring.batch.helloworldbatch.reader;
 
-import io.spring.batch.helloworldbatch.domain.Customer;
-import io.spring.batch.helloworldbatch.domain.Transaction;
-import org.springframework.batch.item.*;
-import org.springframework.batch.item.file.ResourceAwareItemReaderItemStream;
-import org.springframework.core.io.Resource;
-
-import java.util.ArrayList;
+//import io.spring.batch.helloworldbatch.domain.Customer;
+//import io.spring.batch.helloworldbatch.domain.Transaction;
+//import org.springframework.batch.item.*;
+//import org.springframework.batch.item.file.ResourceAwareItemReaderItemStream;
+//import org.springframework.core.io.Resource;
+//
+//import java.util.ArrayList;
 
 //public class CustomerFileReader implements ItemStreamReader<Customer> {
 //public class CustomerFileReader implements ResourceAwareItemReaderItemStream<Customer> {

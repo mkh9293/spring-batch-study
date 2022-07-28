@@ -1,17 +1,17 @@
 package io.spring.batch.helloworldbatch.job;
 
-import io.spring.batch.helloworldbatch.decider.RandomDecider;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.job.flow.JobExecutionDecider;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+//import io.spring.batch.helloworldbatch.decider.RandomDecider;
+//import org.springframework.batch.core.Job;
+//import org.springframework.batch.core.Step;
+//import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+//import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+//import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+//import org.springframework.batch.core.job.flow.JobExecutionDecider;
+//import org.springframework.batch.core.step.tasklet.Tasklet;
+//import org.springframework.batch.repeat.RepeatStatus;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.context.annotation.Bean;
 
 //@EnableBatchProcessing
 //@SpringBootApplication

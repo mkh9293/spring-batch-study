@@ -1,13 +1,16 @@
 package io.spring.batch.helloworldbatch.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "Customer")
-public class Customer {
+//@Entity
+//@Table(name = "Customer")
+public class Customer implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private static final long serialVersionUID = 1L;
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;

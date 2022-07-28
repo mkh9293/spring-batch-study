@@ -1,9 +1,11 @@
 package io.spring.batch.helloworldbatch;
 
-import io.spring.batch.helloworldbatch.job.*;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
+@EnableBatchProcessing
 public class HelloWorldBatchApplication {
 
     public static void main(String[] args) {
@@ -24,7 +26,10 @@ public class HelloWorldBatchApplication {
 //        SpringApplication.run(StoredProcedureJob.class, args);
 //        SpringApplication.run(SpringDataRepositoryJob.class, args);
 //        SpringApplication.run(ExistingServiceJob.class, args);
-        SpringApplication.run(CustomInputJob.class, args);
+//        SpringApplication.run(CustomInputJob.class, args);
+//        SpringApplication.run(CustomInputJob.class, args);
+        SpringApplication.run(HelloWorldBatchApplication.class, args);
+//        SpringApplication.run(FormattedTextFileJob.class, args);
     }
 
 }

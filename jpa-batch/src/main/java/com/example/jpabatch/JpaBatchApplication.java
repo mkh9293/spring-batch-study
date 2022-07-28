@@ -11,7 +11,7 @@ public class JpaBatchApplication {
 
     public static void main(String[] args) {
 //        SpringApplication.run(JpaBatchApplication.class, args);
-        SpringApplication.run(JpaJob.class, args);
+//        SpringApplication.run(JpaJob.class, args);
     }
 
 }
