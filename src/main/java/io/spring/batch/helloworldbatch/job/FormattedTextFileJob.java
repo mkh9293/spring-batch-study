@@ -16,62 +16,63 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
-@Configuration
+//@Configuration
 public class FormattedTextFileJob {
 
-    private JobBuilderFactory jobBuilderFactory;
-
-    private StepBuilderFactory stepBuilderFactory;
-
-    public FormattedTextFileJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {
-        this.jobBuilderFactory = jobBuilderFactory;
-        this.stepBuilderFactory = stepBuilderFactory;
-    }
-
-    @Bean
-    @StepScope
-    public FlatFileItemReader<Customer> customerFileReader(
-            @Value("#{jobParameters['customerFile']}") Resource resource
-    ) {
-
-        return new FlatFileItemReaderBuilder<Customer>()
-                .name("customerFileReader")
-                .resource(resource)
-                .delimited()
-                .names("firstName", "middleInitial", "lastName", "address", "city", "state", "zipCode")
-                .targetType(Customer.class)
-                .build();
-    }
-
-    @Bean
-    @StepScope
-    public FlatFileItemWriter<Customer> customerItemWriter(
-            @Value("#{jobParameters['outputFile']}") Resource outputFile
-    ) {
-        return new FlatFileItemWriterBuilder<Customer>()
-                .name("customerItemWriter")
-                .resource(outputFile)
-                .formatted()
-                .format("%s %s lives at %s %s in %s, %s.")
-                .names("firstName", "lastName", "address", "city", "state", "zipCode")
-                .build();
-    }
-
-    @Bean
-    public Step formatStep() {
-        return this.stepBuilderFactory.get("formatStep")
-                .<Customer, Customer>chunk(10)
-                .reader(customerFileReader(null))
-                .writer(customerItemWriter(null))
-                .build();
-    }
-
-    @Bean
-    public Job formatJob() {
-        return this.jobBuilderFactory.get("formatJob")
-                .start(formatStep())
-                .incrementer(new RunIdIncrementer())
-                .build();
-    }
+//    private JobBuilderFactory jobBuilderFactory;
+//
+//    private StepBuilderFactory stepBuilderFactory;
+//
+//    public FormattedTextFileJob(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory) {
+//        this.jobBuilderFactory = jobBuilderFactory;
+//        this.stepBuilderFactory = stepBuilderFactory;
+//    }
+//
+//    @Bean
+//    @StepScope
+//    public FlatFileItemReader<Customer> customerFileReader(
+//            @Value("#{jobParameters['customerFile']}") Resource resource
+//    ) {
+//
+//        return new FlatFileItemReaderBuilder<Customer>()
+//                .name("customerFileReader")
+//                .resource(resource)
+//                .delimited()
+//                .names("firstName", "middleInitial", "lastName", "address", "city", "state", "zipCode")
+//                .targetType(Customer.class)
+//                .build();
+//    }
+//
+//    @Bean
+//    @StepScope
+//    public FlatFileItemWriter<Customer> customerItemWriter(
+//            @Value("#{jobParameters['outputFile']}") Resource outputFile
+//    ) {
+//        return new FlatFileItemWriterBuilder<Customer>()
+//                .name("customerItemWriter")
+//                .resource(outputFile)
+//                .formatted()
+//                .format("%s %s lives at %s %s in %s, %s.")
+//                .names("firstName", "lastName", "address", "city", "state", "zipCode")
+////                .transactional(false)
+//                .build();
+//    }
+//
+//    @Bean
+//    public Step formatStep() {
+//        return this.stepBuilderFactory.get("formatStep")
+//                .<Customer, Customer>chunk(10)
+//                .reader(customerFileReader(null))
+//                .writer(customerItemWriter(null))
+//                .build();
+//    }
+//
+//    @Bean
+//    public Job formatJob() {
+//        return this.jobBuilderFactory.get("formatJob")
+//                .start(formatStep())
+//                .incrementer(new RunIdIncrementer())
+//                .build();
+//    }
 
 }
