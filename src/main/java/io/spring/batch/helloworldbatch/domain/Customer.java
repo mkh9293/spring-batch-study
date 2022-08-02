@@ -1,5 +1,9 @@
 package io.spring.batch.helloworldbatch.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -43,6 +47,19 @@ public class Customer implements Serializable {
     @Size(min = 5, max = 5)
     @Pattern(regexp = "\\d{5}")
     private String zipCode;
+
+    public Customer() {
+    }
+
+    public Customer(Customer original) {
+        this.firstName = original.getFirstName();
+        this.middleInitial = original.getMiddleInitial();
+        this.lastName = original.getLastName();
+        this.address = original.getAddress();
+        this.city = original.getCity();
+        this.state = original.getState();
+        this.zipCode = original.getZipCode();
+    }
 
     public Long getId() {
         return id;

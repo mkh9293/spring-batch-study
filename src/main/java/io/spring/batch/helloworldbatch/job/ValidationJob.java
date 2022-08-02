@@ -1,6 +1,7 @@
 package io.spring.batch.helloworldbatch.job;
 
 import io.spring.batch.helloworldbatch.domain.Customer;
+import io.spring.batch.helloworldbatch.service.UpperCaseNameService;
 import io.spring.batch.helloworldbatch.validator.UniqueLastNameValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -9,6 +10,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.adapter.ItemProcessorAdapter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.validator.BeanValidatingItemProcessor;
@@ -28,17 +30,17 @@ public class ValidationJob {
     @Autowired
     private StepBuilderFactory stepBuilderFactory;
 
-    @Bean
-    public UniqueLastNameValidator validator() {
-        UniqueLastNameValidator uniqueLastNameValidator = new UniqueLastNameValidator();
-        uniqueLastNameValidator.setName("validator");
-        return uniqueLastNameValidator;
-    }
-
-    @Bean
-    public ValidatingItemProcessor<Customer> customerValidatingItemProcessor() {
-        return new ValidatingItemProcessor<>(validator());
-    }
+//    @Bean
+//    public UniqueLastNameValidator validator() {
+//        UniqueLastNameValidator uniqueLastNameValidator = new UniqueLastNameValidator();
+//        uniqueLastNameValidator.setName("validator");
+//        return uniqueLastNameValidator;
+//    }
+//
+//    @Bean
+//    public ValidatingItemProcessor<Customer> customerValidatingItemProcessor() {
+//        return new ValidatingItemProcessor<>(validator());
+//    }
 
     @Bean
     @StepScope
@@ -65,13 +67,23 @@ public class ValidationJob {
 //    }
 
     @Bean
+    public ItemProcessorAdapter<Customer, Customer> itemProcessorAdapter(UpperCaseNameService service) {
+        ItemProcessorAdapter<Customer, Customer> adapter = new ItemProcessorAdapter<>();
+
+        adapter.setTargetObject(service);
+        adapter.setTargetMethod("upperCase");
+        return adapter;
+    }
+
+    @Bean
     public Step copyFileStep() {
         return this.stepBuilderFactory.get("copyFileStep")
                 .<Customer, Customer>chunk(5)
                 .reader(customerItemReader(null))
-                .processor(customerValidatingItemProcessor())
+//                .processor(customerValidatingItemProcessor())
+                .processor(itemProcessorAdapter(null))
                 .writer(itemWriter())
-                .stream(validator())
+//                .stream(validator())
                 .build();
     }
 
