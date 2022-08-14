@@ -1,7 +1,10 @@
 package com.apress.batch.chapter10.configuration;
 
+import com.apress.batch.chapter10.aggregator.StatementLineAggregator;
+import com.apress.batch.chapter10.callback.StatementHeaderCallback;
 import com.apress.batch.chapter10.classifier.CustomerUpdateClassifier;
 import com.apress.batch.chapter10.domain.*;
+import com.apress.batch.chapter10.processor.AccountItemProcessor;
 import com.apress.batch.chapter10.validator.CustomerItemValidator;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -14,7 +17,11 @@ import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.MultiResourceItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
+import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
+import org.springframework.batch.item.file.builder.MultiResourceItemWriterBuilder;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.LineTokenizer;
@@ -51,10 +58,79 @@ public class ImportJobConfiguration {
 //                .start(importCustomerUpdates())
 //                .next(importTransactions())
 //                .next(applyTransactions())
-                .start(applyTransactions())
+//                .next(generateStatements(null))
+
+//                .start(applyTransactions())
+
+                .start(generateStatements(null))
                 .incrementer(new RunIdIncrementer())
                 .build();
     }
+
+    @Bean
+    public Step generateStatements(AccountItemProcessor itemProcessor) {
+        return this.stepBuilderFactory.get("generateStatements")
+                .<Statement, Statement>chunk(1)
+                .reader(statementItemReader(null))
+                .processor(itemProcessor)
+                .writer(statementItemWriter(null))
+                .build();
+    }
+
+    @Bean
+    @StepScope
+    public MultiResourceItemWriter<Statement> statementItemWriter(
+            @Value("#{jobParameters['outputDirectory']}") Resource resource
+    ) {
+        return new MultiResourceItemWriterBuilder<Statement>()
+                .name("statementItemWriter")
+                .resource(resource)
+                .itemCountLimitPerResource(1)
+                .delegate(individualStatementItemWriter())
+                .build();
+    }
+
+    @Bean
+    public FlatFileItemWriter<Statement> individualStatementItemWriter() {
+        return new FlatFileItemWriterBuilder<Statement>()
+                .name("individualStatementItemWriter")
+                .headerCallback(new StatementHeaderCallback())
+                .lineAggregator(new StatementLineAggregator())
+                .build();
+    }
+
+    @Bean
+    public JdbcCursorItemReader<Statement> statementItemReader(DataSource dataSource) {
+        return new JdbcCursorItemReaderBuilder<Statement>()
+                .name("statementItemReader")
+                .dataSource(dataSource)
+                .sql("SELECT * FROM CUSTOMER")
+                .rowMapper((resultSet, i) -> {
+                    Customer customer = new Customer(resultSet.getLong("customer_id"),
+                            resultSet.getString("first_name"),
+                            resultSet.getString("middle_name"),
+                            resultSet.getString("last_name"),
+                            resultSet.getString("address1"),
+                            resultSet.getString("address2"),
+                            resultSet.getString("city"),
+                            resultSet.getString("state"),
+                            resultSet.getString("postal_code"),
+                            resultSet.getString("ssn"),
+                            resultSet.getString("email_address"),
+                            resultSet.getString("home_phone"),
+                            resultSet.getString("cell_phone"),
+                            resultSet.getString("work_phone"),
+                            resultSet.getInt("notification_pref"));
+
+                    return new Statement(customer);
+                }).build();
+    }
+
+
+
+    /**
+     * -- apply transaction
+     */
 
     @Bean
     public Step applyTransactions() {
