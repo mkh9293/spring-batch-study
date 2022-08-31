@@ -12,15 +12,12 @@ import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.xml.StaxEventItemReader;
-import org.springframework.batch.item.xml.builder.StaxEventItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
 import javax.sql.DataSource;
 
@@ -89,23 +86,6 @@ public class PartitionJobConfiguration {
                 .build();
     }
 
-
-//    @Bean
-//    @StepScope
-//    public StaxEventItemReader<Transaction2> xmlTransactionReader(
-//            @Value("#{jobParameters['inputXmlFile']}") Resource resource
-//    ) {
-//
-//        Jaxb2Marshaller unmarshaller = new Jaxb2Marshaller();
-//        unmarshaller.setClassesToBeBound(Transaction2.class);
-//
-//        return new StaxEventItemReaderBuilder<Transaction2>()
-//                .name("xmlFileTransactionReader")
-//                .resource(resource)
-//                .addFragmentRootElements("transaction")
-//                .unmarshaller(unmarshaller)
-//                .build();
-//    }
 
     @Bean
     @StepScope
