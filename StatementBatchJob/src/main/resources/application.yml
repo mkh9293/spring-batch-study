@@ -13,4 +13,4 @@ spring:
     init:
       schema-locations:
         - schema-mysql.sql
-      mode: never
+#      mode: never

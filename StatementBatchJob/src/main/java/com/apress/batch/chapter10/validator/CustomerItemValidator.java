@@ -13,12 +13,12 @@ import java.util.Map;
 @Component
 public class CustomerItemValidator implements Validator<CustomerUpdate> {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    protected final NamedParameterJdbcTemplate jdbcTemplate;
 
-    private static final String FIND_CUSTOMER = "SELECT COUNT(*) FROM CUSTOMER WHERE customer_id = :id";
+    protected static final String FIND_CUSTOMER = "SELECT COUNT(*) FROM CUSTOMER WHERE customer_id = :id";
 
-    public CustomerItemValidator(DataSource dataSource) {
-        this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+    public CustomerItemValidator(NamedParameterJdbcTemplate template) {
+        this.jdbcTemplate = template;
     }
 
     @Override
